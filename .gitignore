@@ -1,0 +1,60 @@
+# Build directories
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Compiled files
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Test and coverage
+*.gcda
+*.gcno
+*.gcov
+coverage/
+htmlcov/
+.coverage
+
+# Documentation
+/docs/html/
+/docs/latex/
+/docs/xml/
+doxygen_warnings.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Package files
+*.tar.gz
+*.zip
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Benchmark results
+/benchmarks/results/
+*.bench
+
+# OS files
+Thumbs.db
+desktop.ini
