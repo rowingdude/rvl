@@ -10,14 +10,13 @@ I am releasing this library and all future versions of it under the MIT license,
 
 ## Features
 
-- **SIMD Optimized**: Uses widely tested CPU feature detection to enable compile-time optimizations such as vector AVX and SSE
-- **Modular Design**: Maintains strict concern separation with concepts being housed in discrete file pairs
-- **Batch Operations**: All equations use `core::memory::simd_vector<T>` for efficient vectorized calculations
-- **Memory Efficient**: Zero-copy, move-semantic buffer classes with aligned memory allocation
-- **Antenna Design Ready**: Complete foundation for antenna design programs with current distribution, array factors, impedance analysis, and efficiency calculations
-- **Advanced Propagation**: Professional-grade HF ionospheric ray tracing and VHF/UHF tropospheric scatter modeling
-- **Ham Radio Focused**: Includes realistic examples and calculations for amateur radio applications
-- **Cross-Platform**: Header-only library designed for easy porting across operating systems
+- Uses widely tested CPU feature detection to enable compile-time optimizations such as vector AVX and SSE
+- Maintains strict concern separation with concepts being housed in discrete file pairs
+- All equations use `core::memory::simd_vector<T>` for efficient vectorized calculations
+- Zero-copy, move-semantic buffer classes with aligned memory allocation
+- Complete foundation for antenna design programs with current distribution, array factors, impedance analysis, and efficiency calculations
+- Ionospheric ray tracing and VHF/UHF tropospheric scatter modeling
+- Header-only library designed for easy porting across operating systems
 
 ## Concept Table of Contents
 
@@ -30,7 +29,7 @@ I am releasing this library and all future versions of it under the MIT license,
 
 ### Antenna Models
 
-#### Design Foundations ⚡ **PROFESSIONAL GRADE**
+#### Design Foundations
 - [Current Distribution](src/antenna/current_distribution.hpp) - Current distribution for arbitrary wire antennas (Method of Moments foundation)
   - Sinusoidal and King's theory current models
   - Center-fed and off-center-fed dipole calculations
@@ -70,7 +69,7 @@ I am releasing this library and all future versions of it under the MIT license,
 - [Friis Polarization](src/propagation/friis_with_polarization_mismatch.hpp) - Polarization losses
 - [Ground Wave Basic](src/propagation/ground_wave_propagation.hpp) - Basic ground wave
 
-#### HF Ionospheric Propagation 📡 **ADVANCED**
+#### HF Ionospheric Propagation
 - [Ionospheric Ray Tracing](src/propagation/ionospheric_ray_tracing.hpp) - **Complete HF propagation prediction system**
   - Hamilton's equations solver for accurate ray trajectories
   - MUF (Maximum Usable Frequency) calculations for any path
@@ -83,7 +82,7 @@ I am releasing this library and all future versions of it under the MIT license,
 - [Group Phase Path](src/propagation/group_phase_path.hpp) - Group and phase path integration
 - [Ionospheric Scintillation](src/propagation/ionospheric_scintillation.hpp) - Rytov variance and S4 scintillation indices
 
-#### VHF/UHF Tropospheric Propagation 🌤️ **ADVANCED**
+#### VHF/UHF Tropospheric Propagation
 - [Tropospheric Scatter](src/propagation/tropospheric_scatter.hpp) - **Professional beyond-horizon modeling**
   - Volume scattering theory with Cn² turbulence parameters
   - Path loss analysis with detailed component breakdown
@@ -101,8 +100,8 @@ I am releasing this library and all future versions of it under the MIT license,
 - [Terrain Diffraction](src/propagation/terrain_diffraction.hpp) - Knife-edge and multiple obstacles
 - [Hata Model](src/propagation/hata_model.hpp) - Urban/suburban/rural path loss
 
-### Feedline Models 📊 **COMPREHENSIVE**
-- [Smith Chart](src/feedline/smith_chart.hpp) - **Complete impedance matching toolkit**
+### Feedline Models
+- [Smith Chart](src/feedline/smith_chart.hpp)
   - Impedance to reflection coefficient conversions
   - Transmission line impedance transformations
   - L-network design for impedance matching
@@ -120,28 +119,6 @@ I am releasing this library and all future versions of it under the MIT license,
 - [Intermodulation](src/rf_systems/intermodulation_distortion.hpp) - IP3 and IMD calculations
 - [Phase Noise](src/rf_systems/phase_noise.hpp) - Phase noise and jitter analysis
 
-## 🚀 **Current Capabilities**
-
-RadioVectorLib now provides **professional-grade** radio frequency modeling capabilities:
-
-### **🎯 Advanced Propagation Modeling**
-- **HF Ionospheric Ray Tracing** 📡: Complete Hamilton's equations solver with MUF calculations
-- **VHF/UHF Tropospheric Scatter** 🌤️: Beyond-horizon modeling with diversity analysis  
-- Real-world scenarios: Contest planning, DX communication, weak signal work
-
-### **⚡ Antenna Design Foundations**  
-- **Current Distribution**: Method of Moments foundation for arbitrary wire antennas
-- **Array Factor**: Multi-element arrays with beamforming and sidelobe control
-- **Impedance Analysis**: King's theory, bandwidth prediction, Q-factor calculations
-- **Smith Chart**: Complete impedance matching toolkit with network design
-- **Efficiency Analysis**: Realistic loss modeling with material comparisons
-
-### **📊 Professional Features**
-- SIMD-optimized batch calculations for high performance
-- Realistic ham radio examples (20m dipoles, 2m Yagis, material comparisons)
-- Geographic coordinate support for real-world path analysis
-- Statistical fading models and availability predictions
-- Cross-platform header-only library design
 
 ## Quick Start
 
@@ -163,6 +140,8 @@ g++ -std=c++20 -O2 -I. test_tropospheric_scatter.cpp src/propagation/*.cpp -o te
 
 ### Example Usage
 
+To build a prototype 4el Yagi, you could:
+
 ```cpp
 #include "src/antenna/array_factor.hpp"
 #include "src/propagation/ionospheric_ray_tracing.hpp"
@@ -171,7 +150,6 @@ g++ -std=c++20 -O2 -I. test_tropospheric_scatter.cpp src/propagation/*.cpp -o te
 using namespace rvl::antenna;
 using namespace rvl::propagation;
 
-// Design a 4-element Yagi array
 array_factor_d::linear_array_params yagi;
 yagi.num_elements = 4;
 yagi.element_spacing_m = 0.35;  // 0.35λ spacing
@@ -180,13 +158,11 @@ yagi.frequency_hz = 144.2e6;    // 2m band
 auto directivity = array_factor_d::calculate_array_directivity_db(yagi);
 std::cout << "Yagi directivity: " << directivity << " dBi" << std::endl;
 
-// Calculate HF propagation (20m band)
 auto ionosphere = ionospheric_ray_tracing_d::create_chapman_profile(12e6, 320.0, 45.0);
 auto muf_analysis = ionospheric_ray_tracing_d::calculate_muf(
     tx_position, rx_position, ionosphere);
 std::cout << "MUF: " << muf_analysis.maximum_usable_frequency_hz / 1e6 << " MHz" << std::endl;
 
-// Analyze VHF troposcatter path
 auto geometry = tropospheric_scatter_d::create_path_geometry(
     40.7, -74.0, 100.0,  // NYC coordinates, 100m height
     42.4, -71.1, 100.0   // Boston coordinates
@@ -196,20 +172,6 @@ auto scatter_analysis = tropospheric_scatter_d::calculate_enhanced_scatter_analy
     432e6, geometry, atmosphere, 12.0, 12.0);  // 432 MHz with 12 dBi antennas
 ```
 
-## Architecture
-
-```
-rvl/
-├── include/          # Public API headers
-├── src/              # Implementation headers
-│   ├── core/         # Memory, SIMD, math foundations
-│   ├── antenna/      # Antenna modeling
-│   ├── propagation/  # Propagation models
-│   └── rf_systems/   # System-level calculations
-├── tests/            # Unit and integration tests
-├── benchmarks/       # Performance benchmarks
-└── examples/         # Usage examples
-```
 
 ## Dependencies
 
@@ -228,5 +190,4 @@ rvl/
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
 
 ## License
-
-[License TBD]
+MIT
